@@ -64,6 +64,14 @@ const AddCar = () => {
     });
   };
 
+  const handlePreview = () => {
+    const previewData = {
+      ...cars,
+      isAutomatic: isAutomatic,
+    };
+    alert(JSON.stringify(previewData, null, 2));
+  };
+
   return (
     <div>
       <form
@@ -204,6 +212,13 @@ const AddCar = () => {
         <Link className="w-100 btn btn-lg btn-primary mt-3" to="/cars">
           Go to cars
         </Link>
+        <button
+          className="w-100 btn btn-lg btn-secondary mt-3"
+          type="button"
+          onClick={handlePreview}
+        >
+          Preview
+        </button>
       </form>
     </div>
   );
