@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { postCars } from "../service/carsService";
 import { Link } from "react-router-dom";
+import Preview from "./Preview";
+import { Button } from "react-bootstrap";
 
 const AddCar = () => {
   const [isAutomatic, setIsAutomatic] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
 
   const [cars, setCars] = useState({
     brand: "",
@@ -65,11 +68,11 @@ const AddCar = () => {
   };
 
   const handlePreview = () => {
-    const previewData = {
-      ...cars,
-      isAutomatic: isAutomatic,
-    };
-    alert(JSON.stringify(previewData, null, 2));
+    setShowPreview(true);
+  };
+
+  const hidePreview = () => {
+    setShowPreview(false);
   };
 
   return (
@@ -212,13 +215,24 @@ const AddCar = () => {
         <Link className="w-100 btn btn-lg btn-primary mt-3" to="/cars">
           Go to cars
         </Link>
-        <button
+        <Button
           className="w-100 btn btn-lg btn-secondary mt-3"
-          type="button"
           onClick={handlePreview}
         >
           Preview
-        </button>
+        </Button>
+
+        <Preview
+          show={showPreview}
+          onHide={hidePreview}
+          brand={cars.brand}
+          model={cars.model}
+          year={cars.year}
+          maxspeed={cars.maxSpeed}
+          isautomatic={isAutomatic ? "Yes" : "No"}
+          engine={cars.engine}
+          numberofdoors={cars.numberOfDoors}
+        />
       </form>
     </div>
   );
