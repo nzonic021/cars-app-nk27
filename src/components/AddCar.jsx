@@ -31,6 +31,21 @@ const AddCar = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (cars.engine.length === 0) {
+      return alert(`Polje Engine ne moze biti prazno`);
+    }
+    if (cars.year.length === 0) {
+      return alert(`Polje Year ne moze biti prazno`);
+    }
+    if (cars.numberOfDoors === 0) {
+      return alert(`Polje Number of doors ne moze biti prazno`);
+    }
+    if (cars.brand.length < 2) {
+      return alert(`Polje Brand mora imati minimum 2 karaktera`);
+    }
+    if (cars.model.length < 2) {
+      return alert(`Polje Model mora imati minimum 2 karaktera`);
+    }
     postCars(
       cars.brand,
       cars.model,
@@ -127,10 +142,11 @@ const AddCar = () => {
         <div className="form-floating mt-3">
           <input
             name="maxSpeed"
-            value={cars.maxSpeed}
+            value=""
             onChange={handleInputChange}
             type="number"
             className="form-control"
+            placeholder="Max speed"
           />
           <label htmlFor="maxSpeed">Max Speed</label>
         </div>
