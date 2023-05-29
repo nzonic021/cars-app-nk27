@@ -31,3 +31,23 @@ export const postCars = (
     numberOfDoors,
   });
 };
+
+// export const editCars = (
+//   brand,
+//   model,
+//   year,
+//   maxSpeed,
+//   isAutomatic,
+//   engine,
+//   numberOfDoors
+// ) => {
+//   return API.put("/cars", {
+//     brand,
+//     model,
+//     year,
+//     maxSpeed,
+//     isAutomatic,
+//     engine,
+//     numberOfDoors,
+//   });
+// };
