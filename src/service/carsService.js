@@ -4,6 +4,14 @@ export const getCars = () => {
   return API.get("/cars");
 };
 
+export const getCarById = (id) => {
+  return API.get(`/cars/${id}`);
+};
+
+export const editCarById = (id, car) => {
+  return API.patch(`/cars/${id}`, car);
+};
+
 export const postCars = (
   brand,
   model,

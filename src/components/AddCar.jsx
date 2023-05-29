@@ -1,13 +1,21 @@
-import { useState } from "react";
-import { postCars } from "../service/carsService";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { editCarById, postCars } from "../service/carsService";
+import { Link, useNavigate } from "react-router-dom";
 import Preview from "./Preview";
 import { Button } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import { getCarById } from "../service/carsService";
+
+let years = [];
+
+for (let i = 1990; i <= 2018; i++) {
+  years.push(i);
+}
 
 const AddCar = () => {
+  const navigate = useNavigate();
   const [isAutomatic, setIsAutomatic] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
-
   const [cars, setCars] = useState({
     brand: "",
     model: "",
@@ -17,6 +25,17 @@ const AddCar = () => {
     engine: "",
     numberOfDoors: 0,
   });
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      getCarById(id).then(({ data }) => {
+        setCars(data);
+        console.log(data);
+      });
+    }
+  }, []);
+
   const handleChecked = () => {
     setIsAutomatic(!isAutomatic);
   };
@@ -40,21 +59,22 @@ const AddCar = () => {
       cars.engine,
       cars.numberOfDoors
     );
-    setCars({
-      brand: "",
-      model: "",
-      year: "",
-      maxSpeed: 0,
-      isAutomatic: isAutomatic,
-      engine: "",
-      numberOfDoors: 0,
-    });
+    if (id) {
+      editCarById(id, cars);
+    } else {
+      setCars({
+        brand: "",
+        model: "",
+        year: "",
+        maxSpeed: 0,
+        isAutomatic: isAutomatic,
+        engine: "",
+        numberOfDoors: 0,
+      });
+    }
+    navigate("/");
   };
-  let years = [];
 
-  for (let i = 1990; i <= 2018; i++) {
-    years.push(i);
-  }
   const handleReset = () => {
     setCars({
       brand: "",
@@ -91,7 +111,6 @@ const AddCar = () => {
             onChange={handleInputChange}
             placeholder="brand"
           />
-          <label htmlFor="brand">Brand</label>
         </div>
         <div className="form-floating mt-3">
           <input
@@ -102,7 +121,6 @@ const AddCar = () => {
             onChange={handleInputChange}
             placeholder="model"
           />
-          <label htmlFor="model">Model</label>
         </div>
         <div className="form-floating mt-3">
           <select
@@ -122,7 +140,6 @@ const AddCar = () => {
               );
             })}
           </select>
-          <label htmlFor="year">Year</label>
         </div>
         <div className="form-floating mt-3">
           <input
@@ -132,7 +149,6 @@ const AddCar = () => {
             type="number"
             className="form-control"
           />
-          <label htmlFor="maxSpeed">Max Speed</label>
         </div>
         <div className="form-check mt-3">
           <input
@@ -143,9 +159,7 @@ const AddCar = () => {
             name="isAutomatic"
             value={cars.isAutomatic}
           />
-          <label htmlFor="isAutomatic">Automatic</label>
         </div>
-        <label htmlFor="engine">Engine:</label>
         <div>
           <div>
             <input
@@ -196,7 +210,6 @@ const AddCar = () => {
             type="number"
             className="form-control"
           />
-          <label>Number of doors</label>
         </div>
         <button
           className="w-100 btn btn-lg btn-success mt-3"

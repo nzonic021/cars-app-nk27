@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getCars } from "../service/carsService";
+import { Link } from "react-router-dom";
 
 const AppCars = () => {
   const [cars, setCars] = useState([]);
@@ -24,6 +25,7 @@ const AppCars = () => {
               <th>Automatic</th>
               <th>Engine</th>
               <th>No of doors</th>
+              <th>Edit</th>
             </tr>
           </thead>
           <tbody>
@@ -36,6 +38,9 @@ const AppCars = () => {
                 <td>{car.isAutomatic ? "Yes" : "No"}</td>
                 <td>{car.engine}</td>
                 <td>{car.numberOfDoors}</td>
+                <td>
+                  <Link to={`edit/${car.id}`}>Edit</Link>
+                </td>
               </tr>
             ))}
           </tbody>

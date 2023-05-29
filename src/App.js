@@ -11,6 +11,7 @@ function App() {
       <Route path="/" element={<Navigate to="/cars" />}></Route>
       <Route path="/cars" element={<AppCars />}></Route>
       <Route path="/add" element={<AddCar />}></Route>
+      <Route path="/cars/edit/:id" element={<AddCar />}></Route>
     </Routes>
   );
 }
