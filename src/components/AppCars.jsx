@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getCars } from "../service/carsService";
+import { deleteCarById, getCars } from "../service/carsService";
 import { Link } from "react-router-dom";
 
 const AppCars = () => {
@@ -8,6 +8,16 @@ const AppCars = () => {
   useEffect(() => {
     getCars().then(({ data }) => setCars(data));
   }, []);
+
+  const handleDelete = (id) => {
+    const shouldDelete = window.confirm(
+      "Da li ste sigurni da želite obrisati automobil?"
+    );
+    if (shouldDelete) {
+      deleteCarById(id);
+      getCars().then(({ data }) => setCars(data));
+    }
+  };
 
   return (
     <div>
@@ -26,6 +36,7 @@ const AppCars = () => {
               <th>Engine</th>
               <th>No of doors</th>
               <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -40,6 +51,11 @@ const AppCars = () => {
                 <td>{car.numberOfDoors}</td>
                 <td>
                   <Link to={`edit/${car.id}`}>Edit</Link>
+                </td>
+                <td>
+                  <button type="delete" onClick={() => handleDelete(car.id)}>
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

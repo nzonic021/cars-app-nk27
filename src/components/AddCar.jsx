@@ -34,7 +34,7 @@ const AddCar = () => {
         console.log(data);
       });
     }
-  }, []);
+  }, [id]);
 
   const handleChecked = () => {
     setIsAutomatic(!isAutomatic);
@@ -126,6 +126,7 @@ const AddCar = () => {
             onChange={handleInputChange}
             placeholder="brand"
           />
+          <label htmlFor="brand">Brand</label>
         </div>
         <div className="form-floating mt-3">
           <input
@@ -136,6 +137,7 @@ const AddCar = () => {
             onChange={handleInputChange}
             placeholder="model"
           />
+          <label htmlFor="model">Model</label>
         </div>
         <div className="form-floating mt-3">
           <select
@@ -155,16 +157,18 @@ const AddCar = () => {
               );
             })}
           </select>
+          <label htmlFor="year">Year</label>
         </div>
         <div className="form-floating mt-3">
           <input
             name="maxSpeed"
-            value=""
+            value={cars.maxSpeed}
             onChange={handleInputChange}
             type="number"
             className="form-control"
             placeholder="Max speed"
           />
+          <label htmlFor="maxSpeed">Max Speed</label>
         </div>
         <div className="form-check mt-3">
           <input
@@ -175,7 +179,9 @@ const AddCar = () => {
             name="isAutomatic"
             value={cars.isAutomatic}
           />
+          <label htmlFor="isAutomatic">Automatic</label>
         </div>
+        <label htmlFor="engine">Engine:</label>
         <div>
           <div>
             <input
@@ -226,6 +232,7 @@ const AddCar = () => {
             type="number"
             className="form-control"
           />
+          <label>Number of doors</label>
         </div>
         <button
           className="w-100 btn btn-lg btn-success mt-3"
