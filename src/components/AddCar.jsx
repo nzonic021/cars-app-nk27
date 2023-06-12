@@ -21,9 +21,9 @@ const AddCar = () => {
     model: "",
     year: "",
     maxSpeed: 0,
-    isAutomatic: false,
+    is_automatic: false,
     engine: "",
-    numberOfDoors: 0,
+    number_of_doors: 0,
   });
   const { id } = useParams();
 
@@ -56,7 +56,7 @@ const AddCar = () => {
     if (cars.year.length === 0) {
       return alert(`Polje Year ne moze biti prazno`);
     }
-    if (cars.numberOfDoors === 0) {
+    if (cars.number_of_doors === 0) {
       return alert(`Polje Number of doors ne moze biti prazno`);
     }
     if (cars.brand.length < 2) {
@@ -65,6 +65,7 @@ const AddCar = () => {
     if (cars.model.length < 2) {
       return alert(`Polje Model mora imati minimum 2 karaktera`);
     }
+
     postCars(
       cars.brand,
       cars.model,
@@ -72,7 +73,7 @@ const AddCar = () => {
       cars.maxSpeed,
       isAutomatic,
       cars.engine,
-      cars.numberOfDoors
+      cars.number_of_doors
     );
     if (id) {
       editCarById(id, cars);
@@ -82,9 +83,9 @@ const AddCar = () => {
         model: "",
         year: "",
         maxSpeed: 0,
-        isAutomatic: isAutomatic,
+        is_automatic: isAutomatic,
         engine: "",
-        numberOfDoors: 0,
+        number_of_doors: 0,
       });
     }
     navigate("/");
@@ -96,9 +97,9 @@ const AddCar = () => {
       model: "",
       year: 0,
       maxSpeed: 0,
-      isAutomatic: isAutomatic,
+      is_automatic: isAutomatic,
       engine: "",
-      numberOfDoors: 0,
+      number_of_doors: 0,
     });
   };
 
@@ -176,8 +177,8 @@ const AddCar = () => {
             type="checkbox"
             checked={isAutomatic}
             onChange={handleChecked}
-            name="isAutomatic"
-            value={cars.isAutomatic}
+            name="is_automatic"
+            value={cars.is_automatic}
           />
           <label htmlFor="isAutomatic">Automatic</label>
         </div>
@@ -226,8 +227,8 @@ const AddCar = () => {
         </div>
         <div className="form-floating mt-3">
           <input
-            name="numberOfDoors"
-            value={cars.numberOfDoors}
+            name="number_of_doors"
+            value={cars.number_of_doors}
             onChange={handleInputChange}
             type="number"
             className="form-control"
@@ -267,7 +268,7 @@ const AddCar = () => {
           maxspeed={cars.maxSpeed}
           isautomatic={isAutomatic ? "Yes" : "No"}
           engine={cars.engine}
-          numberofdoors={cars.numberOfDoors}
+          numberofdoors={cars.number_of_doors}
         />
       </form>
     </div>

@@ -17,18 +17,18 @@ export const postCars = (
   model,
   year,
   maxSpeed,
-  isAutomatic,
+  is_automatic,
   engine,
-  numberOfDoors
+  number_of_doors
 ) => {
   return API.post("/cars", {
     brand,
     model,
     year,
     maxSpeed,
-    isAutomatic,
+    is_automatic,
     engine,
-    numberOfDoors,
+    number_of_doors,
   });
 };
 

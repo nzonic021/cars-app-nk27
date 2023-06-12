@@ -1,12 +1,16 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { deleteCarById, getCars } from "../service/carsService";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { removeCar, setCars } from "../store/cars/slice";
+import { selectCarsValue } from "../store/cars/selectors";
 
 const AppCars = () => {
-  const [cars, setCars] = useState([]);
+  const dispatch = useDispatch();
+  const cars = useSelector(selectCarsValue);
 
   useEffect(() => {
-    getCars().then(({ data }) => setCars(data));
+    getCars().then(({ data }) => dispatch(setCars(data.data)));
   }, []);
 
   const handleDelete = (id) => {
@@ -15,7 +19,7 @@ const AppCars = () => {
     );
     if (shouldDelete) {
       deleteCarById(id);
-      getCars().then(({ data }) => setCars(data));
+      dispatch(removeCar(id));
     }
   };
 
@@ -46,9 +50,9 @@ const AppCars = () => {
                 <td>{car.brand}</td>
                 <td>{car.year}</td>
                 <td>{car.maxSpeed}</td>
-                <td>{car.isAutomatic ? "Yes" : "No"}</td>
+                <td>{car.is_automatic ? "Yes" : "No"}</td>
                 <td>{car.engine}</td>
-                <td>{car.numberOfDoors}</td>
+                <td>{car.number_of_doors}</td>
                 <td>
                   <Link to={`edit/${car.id}`}>Edit</Link>
                 </td>
