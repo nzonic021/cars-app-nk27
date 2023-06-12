@@ -20,6 +20,8 @@ const AppCars = () => {
   const [searchBrand, setSearchBrand] = useState("");
   const [searchModel, setSearchModel] = useState("");
   const [selectedCars, setSelectedCars] = useState([]);
+  const [sortOrder, setSortOrder] = useState(null);
+  const [sortOrderMaxSpeed, setSortOrderMaxSpeed] = useState(null);
 
   useEffect(() => {
     getCars({ brand: searchBrand, model: searchModel }).then(({ data }) =>
@@ -64,6 +66,34 @@ const AppCars = () => {
     dispatch(deselectedAll());
   };
 
+  const sortCarsByBrand = () => {
+    if (sortOrder === "asc") {
+      const sortedCars = [...cars].sort((a, b) =>
+        a.brand.localeCompare(b.brand)
+      );
+      dispatch(setCars(sortedCars));
+      setSortOrder("desc");
+    } else {
+      const sortedCars = [...cars].sort((a, b) =>
+        b.brand.localeCompare(a.brand)
+      );
+      dispatch(setCars(sortedCars));
+      setSortOrder("asc");
+    }
+  };
+
+  const sortCarsByMaxSpeed = () => {
+    if (sortOrderMaxSpeed === "asc") {
+      const sortedCars = [...cars].sort((a, b) => a.max_speed - b.max_speed);
+      dispatch(setCars(sortedCars));
+      setSortOrderMaxSpeed("desc");
+    } else {
+      const sortedCars = [...cars].sort((a, b) => b.max_speed - a.max_speed);
+      dispatch(setCars(sortedCars));
+      setSortOrderMaxSpeed("asc");
+    }
+  };
+
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -101,9 +131,13 @@ const AppCars = () => {
           <thead>
             <tr>
               <th>Model</th>
-              <th>Brand</th>
+              <th>
+                <button onClick={sortCarsByBrand}>Brand</button>
+              </th>
               <th>Year</th>
-              <th>Max speed</th>
+              <th>
+                <button onClick={sortCarsByMaxSpeed}>Max speed</button>
+              </th>
               <th>Automatic</th>
               <th>Engine</th>
               <th>No of doors</th>
