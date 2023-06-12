@@ -20,7 +20,7 @@ const AddCar = () => {
     brand: "",
     model: "",
     year: "",
-    maxSpeed: 0,
+    max_speed: 0,
     is_automatic: false,
     engine: "",
     number_of_doors: 0,
@@ -70,7 +70,7 @@ const AddCar = () => {
       cars.brand,
       cars.model,
       parseInt(cars.year),
-      cars.maxSpeed,
+      cars.max_speed,
       isAutomatic,
       cars.engine,
       cars.number_of_doors
@@ -82,7 +82,7 @@ const AddCar = () => {
         brand: "",
         model: "",
         year: "",
-        maxSpeed: 0,
+        max_speed: 0,
         is_automatic: isAutomatic,
         engine: "",
         number_of_doors: 0,
@@ -96,7 +96,7 @@ const AddCar = () => {
       brand: "",
       model: "",
       year: 0,
-      maxSpeed: 0,
+      max_speed: 0,
       is_automatic: isAutomatic,
       engine: "",
       number_of_doors: 0,
@@ -162,8 +162,8 @@ const AddCar = () => {
         </div>
         <div className="form-floating mt-3">
           <input
-            name="maxSpeed"
-            value={cars.maxSpeed}
+            name="max_speed"
+            value={cars.max_speed}
             onChange={handleInputChange}
             type="number"
             className="form-control"

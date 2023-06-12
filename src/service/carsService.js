@@ -16,7 +16,7 @@ export const postCars = (
   brand,
   model,
   year,
-  maxSpeed,
+  max_speed,
   is_automatic,
   engine,
   number_of_doors
@@ -25,7 +25,7 @@ export const postCars = (
     brand,
     model,
     year,
-    maxSpeed,
+    max_speed,
     is_automatic,
     engine,
     number_of_doors,
