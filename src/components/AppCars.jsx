@@ -22,12 +22,19 @@ const AppCars = () => {
   const [selectedCars, setSelectedCars] = useState([]);
   const [sortOrder, setSortOrder] = useState(null);
   const [sortOrderMaxSpeed, setSortOrderMaxSpeed] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    getCars({ brand: searchBrand, model: searchModel }).then(({ data }) =>
-      dispatch(setCars(data.data))
-    );
-  }, [searchBrand, searchModel]);
+    getCars({
+      current_page: currentPage,
+      brand: searchBrand,
+      model: searchModel,
+    }).then(({ data }) => {
+      dispatch(setCars(data.data));
+      setTotalPages(data.last_page);
+    });
+  }, [searchBrand, searchModel, currentPage]);
 
   const handleDelete = (id) => {
     const shouldDelete = window.confirm(
@@ -94,20 +101,34 @@ const AppCars = () => {
     }
   };
 
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <div className="form-inline mt-3">
+        <div>
+          Search by brand:
           <input
             type="text"
-            className="form-control mr-2"
+            className="form-control"
             placeholder="Brand"
             value={searchBrand}
             onChange={(e) => setSearchBrand(e.target.value)}
           />
+          Search by model:
           <input
             type="text"
-            className="form-control mr-2"
+            className="form-control"
             placeholder="Model"
             value={searchModel}
             onChange={(e) => setSearchModel(e.target.value)}
@@ -115,10 +136,18 @@ const AppCars = () => {
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <button type="button" onClick={handleSelectAll}>
+        <button
+          className="btn btn-info"
+          type="button"
+          onClick={handleSelectAll}
+        >
           Select All
         </button>
-        <button type="button" onClick={handleDeselectAll}>
+        <button
+          className="btn btn-secondary"
+          type="button"
+          onClick={handleDeselectAll}
+        >
           Deselect All
         </button>
       </div>
@@ -126,24 +155,34 @@ const AppCars = () => {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <table
           className="table table-striped table-hover"
-          style={{ width: "300px", textAlign: "center" }}
+          style={{ width: "auto", textAlign: "center" }}
         >
           <thead>
             <tr>
               <th>Model</th>
               <th>
-                <button onClick={sortCarsByBrand}>Brand</button>
+                <button
+                  className="btn btn-outline-success"
+                  onClick={sortCarsByBrand}
+                >
+                  Brand
+                </button>
               </th>
               <th>Year</th>
               <th>
-                <button onClick={sortCarsByMaxSpeed}>Max speed</button>
+                <button
+                  className="btn btn-outline-success"
+                  onClick={sortCarsByMaxSpeed}
+                >
+                  Max speed
+                </button>
               </th>
               <th>Automatic</th>
               <th>Engine</th>
               <th>No of doors</th>
               <th>Edit</th>
               <th>Delete</th>
-              <th>Select</th>
+              <th>Select/Deselect</th>
             </tr>
           </thead>
           {cars.length === 0 ? (
@@ -166,10 +205,19 @@ const AppCars = () => {
                   <td>{car.engine}</td>
                   <td>{car.number_of_doors}</td>
                   <td>
-                    <Link to={`edit/${car.id}`}>Edit</Link>
+                    <Link
+                      to={`edit/${car.id}`}
+                      className="btn btn-outline-warning"
+                    >
+                      Edit
+                    </Link>
                   </td>
                   <td>
-                    <button type="delete" onClick={() => handleDelete(car.id)}>
+                    <button
+                      className="btn btn-outline-danger"
+                      type="delete"
+                      onClick={() => handleDelete(car.id)}
+                    >
                       Delete
                     </button>
                   </td>
@@ -177,11 +225,19 @@ const AppCars = () => {
                     {selectedCars.find(
                       (selectedCar) => selectedCar.id === car.id
                     ) ? (
-                      <button type="select" onClick={() => handleDeselect(car)}>
+                      <button
+                        className="btn btn-secondary"
+                        type="select"
+                        onClick={() => handleDeselect(car)}
+                      >
                         Deselect
                       </button>
                     ) : (
-                      <button type="select" onClick={() => handleSelect(car)}>
+                      <button
+                        className="btn btn-outline-info"
+                        type="select"
+                        onClick={() => handleSelect(car)}
+                      >
                         Select
                       </button>
                     )}
@@ -194,6 +250,33 @@ const AppCars = () => {
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <h5>Ukupno selektovano automobila: {counterValue}</h5>
+      </div>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <nav aria-label="Page navigation example">
+          <ul className="pagination">
+            <li className="page-item">
+              <button
+                className="page-link"
+                onClick={goToPreviousPage}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+            </li>
+            <li className="page-item">
+              <span className="page-link">Page {currentPage}</span>
+            </li>
+            <li className="page-item">
+              <button
+                className="page-link"
+                onClick={goToNextPage}
+                disabled={currentPage === 6}
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   );
