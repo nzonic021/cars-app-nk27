@@ -27,7 +27,7 @@ const AppCars = () => {
 
   useEffect(() => {
     getCars({
-      current_page: currentPage,
+      page: currentPage,
       brand: searchBrand,
       model: searchModel,
     }).then(({ data }) => {
