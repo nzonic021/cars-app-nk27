@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { CarSearch } from "./CarSearch";
 
 const Header = () => {
   return (
@@ -10,7 +11,6 @@ const Header = () => {
         >
           <span className="fs-4">Cars app</span>
         </a>
-
         <ul className="nav nav-pills">
           <li className="nav-item">
             <Link to="/cars" className="nav-link" aria-current="page">
@@ -23,6 +23,7 @@ const Header = () => {
             </Link>
           </li>
         </ul>
+        <CarSearch />
       </header>
     </div>
   );

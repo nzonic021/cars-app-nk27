@@ -1,40 +1,61 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const carsSlice = createSlice({
+const carsSlice = createSlice({
   name: "cars",
   initialState: {
-    value: [],
-    selectedCars: 0,
+    carsList: [],
+    filteredCarsList: [],
+    selectedCarsList: [],
+    search: {
+      brand: "",
+      model: "",
+    },
+    page: 1,
+    lastPage: 1,
   },
   reducers: {
-    setCars: (state, action) => {
-      state.value = action.payload;
+    setCarsList: (state, action) => {
+      state.carsList = action.payload;
     },
-    removeCar: (state, action) => {
-      state.value = state.value.filter((car) => car.id !== action.payload);
+    setFilteredCarsList: (state, action) => {
+      state.filteredCarsList = action.payload;
     },
-    selectCar: (state) => {
-      state.selectedCars += 1;
+    setSearchBrand: (state, action) => {
+      state.search.brand = action.payload.toLowerCase();
     },
-    deselectCar: (state) => {
-      state.selectedCars -= 1;
+    setSearchModel: (state, action) => {
+      state.search.model = action.payload.toLowerCase();
     },
-    selectedAll: (state) => {
-      state.selectedCars = state.value.length;
+    addToSelectedCarsList: (state, action) => {
+      state.selectedCarsList.push(action.payload);
     },
-    deselectedAll: (state) => {
-      state.selectedCars = 0;
+    removeFromSelectedCarsList: (state, action) => {
+      state.selectedCarsList = state.selectedCarsList.filter(
+        (id) => id !== action.payload
+      );
+    },
+    resetSelectedCarsList: (state) => {
+      state.selectedCarsList = [];
+    },
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
+    setLastPage: (state, action) => {
+      state.lastPage = action.payload;
     },
   },
 });
 
 export const {
-  setCars,
-  removeCar,
-  selectCar,
-  deselectCar,
-  selectedAll,
-  deselectedAll,
+  setCarsList,
+  setSearchBrand,
+  setSearchModel,
+  setFilteredCarsList,
+  addToSelectedCarsList,
+  removeFromSelectedCarsList,
+  resetSelectedCarsList,
+  setPage,
+  setLastPage,
 } = carsSlice.actions;
 
 export default carsSlice.reducer;
